@@ -24,12 +24,16 @@ for vehicle in possible_vehicles:
 
 clear = lambda: os.system('clear')
 
-destination = -149, 90
+# destination = -149, 90 # For Town03
+destination = 88.5, 30 # For Town01
 while True:
  location = ego_vehicle.get_location()
  origin = location.x, location.y
+ path = grp.path_search(origin, destination)
  plan = grp.plan_route(origin, destination)
  clear()
+ print "Route nodes"
+ print path
  print "Route plan to destination"
  for decision in plan:
   print decision
