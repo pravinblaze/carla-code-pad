@@ -25,7 +25,11 @@ for vehicle in possible_vehicles:
 clear = lambda: os.system('clear')
 
 # destination = -149, 90 # For Town03
-destination = 88.5, 30 # For Town01
+# destination = 88.5, 30 # For Town01
+# destination = 200, 9.6
+# destination = -7.5, 142 # Town02
+# destination = 44.61, -192.88
+destination = 227.31, -5.08551
 while True:
  location = ego_vehicle.get_location()
  origin = location.x, location.y
@@ -38,4 +42,3 @@ while True:
  for decision in plan:
   print decision
  time.sleep(1)
-
