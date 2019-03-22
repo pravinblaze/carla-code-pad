@@ -22,12 +22,11 @@ for edge in grp._graph.edges():
     n1, n2 = edge
     l1 = grp._graph.nodes[n1]['vertex']
     l2 = grp._graph.nodes[n2]['vertex']
-    x1, y1 = l1.x, l1.y
-    x2, y2 = l2.x, l2.y
+    x1, y1 = l1[0], l1[1]
+    x2, y2 = l2[0], l2[1]
     x1, x2 = -x1, -x2
     if grp._graph.edges[n1,n2]['type'] == RoadOption.LANEFOLLOW:
-       if 
-       plt.plot([x1, x2], [y1, y2],)
+       plt.plot([x1, x2], [y1, y2], color='red')
     else:
        plt.plot([x1, x2], [y1, y2], color='black')
     plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
