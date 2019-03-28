@@ -1,3 +1,4 @@
+import math
 import carla
 import matplotlib
 matplotlib.use('TkAgg')
@@ -25,13 +26,14 @@ for edge in grp._graph.edges():
     x1, y1 = l1[0], l1[1]
     x2, y2 = l2[0], l2[1]
     x1, x2 = -x1, -x2
-    if grp._graph.edges[n1,n2]['type'] == RoadOption.LANEFOLLOW:
-       plt.plot([x1, x2], [y1, y2], color='red')
-    else:
-       plt.plot([x1, x2], [y1, y2], color='black')
-    plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
-	shape='full', lw=0, length_includes_head=True, head_width=2)
-    plt.annotate('(%s)' % n1, xy=(x1, y1), textcoords='data')
-    plt.annotate('(%s)' % n2, xy=(x2, y2), textcoords='data')
+    if math.sqrt((x2-x1)**2+(y2-y1)**2) > 0.01:
+        if grp._graph.edges[n1,n2]['type'] == RoadOption.LANEFOLLOW:
+            plt.plot([x1, x2], [y1, y2], color='red')
+        else:
+            plt.plot([x1, x2], [y1, y2], color='black')
+        plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
+        shape='full', lw=0, length_includes_head=True, head_width=2)
+        plt.annotate('(%s)' % n1, xy=(x1, y1), textcoords='data')
+        plt.annotate('(%s)' % n2, xy=(x2, y2), textcoords='data')
 
 plt.show()

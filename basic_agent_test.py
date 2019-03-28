@@ -42,11 +42,12 @@ try:
 	while vehicle is None:
 		# <Town01>
 		# spawn_point = carla.Transform(carla.Location(x = 249.18, y = -2.25, z = 1), carla.Rotation(yaw = 180)) # 1
-		spawn_point = carla.Transform(carla.Location(338.70, 226.75, 0.00), carla.Rotation(yaw=270)) # 2
+		# spawn_point = carla.Transform(carla.Location(338.70, 226.75, 0.00), carla.Rotation(yaw=270)) # 2
 		# <Town02>
 		# spawn_point = carla.Transform(carla.Location(x = 165.34, y = 188.116, z = 1), carla.Rotation(yaw = 180)) # 1
 		# <Town03> Segmentation fault, cannot test !
-		# spawn_point = carla.Transform(carla.Location(x = 165.34, y = 188.116, z = 1), carla.Rotation(yaw = 180)) # 1
+		# spawn_point = carla.Transform(carla.Location(x = 150.95, y = -159.00, z = 10), carla.Rotation(yaw = 90)) # 1
+		spawn_point = carla.Transform(carla.Location(x = 150.95, y = -159.00, z = 10), carla.Rotation(yaw = 90)) # 2
 		# <Town04>
 		# spawn_point = carla.Transform(carla.Location(x = -200, y = 37, z = 5), carla.Rotation(yaw = 0)) # 1
 		# spawn_point = carla.Transform(carla.Location(x = 381.5, y = -121.2, z = 1), carla.Rotation(yaw = 90)) # 2
@@ -67,11 +68,12 @@ try:
 	agent = BasicAgent(vehicle, target_speed=30)
 	# <Town01>
 	# agent.set_destination((92.38, 32.44, 0)) # 1
-	agent.set_destination((322.00, 194.70, 0.00)) # 2
+	# agent.set_destination((322.00, 194.70, 0.00)) # 2
 	# <Town02>
 	# agent.set_destination((45.7, 217.96, 0)) # 1
 	# <Town03> Segmentation fault, cannot test !
-	# agent.set_destination((45.7, 217.96, 0)) # 1
+	# agent.set_destination((78.35, -39.10, 10)) # 1
+	agent.set_destination((-10, 82.54, 0)) # 2
 	# <Town04>
 	# agent.set_destination((-493.8, 212.3, 0)) # 1
 	# agent.set_destination((228.1, -307.7, 0)) # 2

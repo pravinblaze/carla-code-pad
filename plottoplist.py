@@ -1,3 +1,5 @@
+import math
+
 import carla
 import matplotlib
 matplotlib.use('TkAgg')
@@ -13,12 +15,15 @@ for segment in topology:
 	x1, y1 = segment[0].transform.location.x, segment[0].transform.location.y
 	x2, y2 = segment[1].transform.location.x, segment[1].transform.location.y
 	x1, x2 = -x1, -x2
-	if segment[0].is_intersection:
-		plt.plot([x1, x2], [y1, y2], color='black')
+	if math.sqrt((x2-x1)**2+(y2-y1)**2) > 0.01:
+		if segment[0].is_intersection:
+			plt.plot([x1, x2], [y1, y2], color='black')
+		else:
+			plt.plot([x1, x2], [y1, y2])
+		plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
+		shape='full', lw=0, length_includes_head=True, head_width=2)
 	else:
-		plt.plot([x1, x2], [y1, y2])
-	plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
-	shape='full', lw=0, length_includes_head=True, head_width=2)
+		print 'Found zero segment', segment[0].transform.location
 
 plt.show()
 

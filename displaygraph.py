@@ -26,7 +26,7 @@ for edge in grp._graph.edges():
     x2, y2, _ = l2
     x1, x2 = -x1, -x2
     edge_obj = grp._graph.edges[n1, n2]
-    if grp._graph.edges[n1,n2]['type'] == RoadOption.LANEFOLLOW:
+    if grp._graph.edges[n1,n2]['type'].value == RoadOption.LANEFOLLOW.value:
         if edge_obj['intersection']:
             plt.plot([x1, x2], [y1, y2], color='red')
         else:
