@@ -47,7 +47,7 @@ try:
 		# spawn_point = carla.Transform(carla.Location(x = 165.34, y = 188.116, z = 1), carla.Rotation(yaw = 180)) # 1
 		# <Town03> Segmentation fault, cannot test !
 		# spawn_point = carla.Transform(carla.Location(x = 150.95, y = -159.00, z = 10), carla.Rotation(yaw = 90)) # 1
-		spawn_point = carla.Transform(carla.Location(x = 150.95, y = -159.00, z = 10), carla.Rotation(yaw = 90)) # 2
+		# spawn_point = carla.Transform(carla.Location(x = 150.95, y = -159.00, z = 10), carla.Rotation(yaw = 90)) # 2
 		# <Town04>
 		# spawn_point = carla.Transform(carla.Location(x = -200, y = 37, z = 5), carla.Rotation(yaw = 0)) # 1
 		# spawn_point = carla.Transform(carla.Location(x = 381.5, y = -121.2, z = 1), carla.Rotation(yaw = 90)) # 2
@@ -59,10 +59,9 @@ try:
 		# spawn_point = carla.Transform(carla.Location(x = -124.4, y = -111.9, z = 1), carla.Rotation(yaw = 270)) # 3
 		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 4
 		# <Town06>
-		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 1
-		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 1
-		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 1
-		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 1
+		# spawn_point = carla.Transform(carla.Location(x = 75.64, y = 52.32, z = 1), carla.Rotation(yaw = 0)) # 1
+		# spawn_point = carla.Transform(carla.Location(x = 48.52, y = 238, z = 1), carla.Rotation(yaw = 0)) # 2
+
 		vehicle = world.try_spawn_actor(blueprint, spawn_point)
 
 	agent = BasicAgent(vehicle, target_speed=30)
@@ -73,7 +72,7 @@ try:
 	# agent.set_destination((45.7, 217.96, 0)) # 1
 	# <Town03> Segmentation fault, cannot test !
 	# agent.set_destination((78.35, -39.10, 10)) # 1
-	agent.set_destination((-10, 82.54, 0)) # 2
+	# agent.set_destination((-10, 82.54, 0)) # 2
 	# <Town04>
 	# agent.set_destination((-493.8, 212.3, 0)) # 1
 	# agent.set_destination((228.1, -307.7, 0)) # 2
@@ -85,12 +84,10 @@ try:
 	# agent.set_destination((144.84, -1.07, 0)) # 3
 	# agent.set_destination((-129.33, 2.86, 0)) # 4
 	# <Town06>
-	# agent.set_destination((-47.75, -50, 0)) # 1
-	# agent.set_destination((-47.75, -50, 0)) # 1
-	# agent.set_destination((-47.75, -50, 0)) # 1
-	# agent.set_destination((-47.75, -50, 0)) # 1
-	# Set sensor
+	# agent.set_destination((-9.16, 19.37, 1)) # 1
+	# agent.set_destination((403.12, -13.74, 1)) # 2
 
+	# Set sensor
 	bp_library = world.get_blueprint_library()
 	bp = bp_library.find('sensor.camera.rgb')
 	bp.set_attribute('image_size_x', str(1920/2))
