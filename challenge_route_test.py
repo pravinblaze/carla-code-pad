@@ -32,8 +32,11 @@ dao = GlobalRoutePlannerDAO(world_map)
 grp = GlobalRoutePlanner(dao)
 grp.setup()
 
-route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/routes_devtest.xml'
-route_index = '25'
+# -------------------- Enter configurations ------------------- #
+route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/Town08.xml'
+route_index = '10'
+basic_agnet_speed = 50
+# ------------------------------------------------------------ #
 
 def parse_routes_file(route_filename):
     """
@@ -107,7 +110,7 @@ try:
 	spawn_point = dense_route_trace[0][0].transform
 	vehicle = world.try_spawn_actor(blueprint, spawn_point)
 
-	agent = BasicAgent(vehicle, target_speed=50)
+	agent = BasicAgent(vehicle, target_speed=basic_agnet_speed)
 	agent._local_planner.set_global_plan(dense_route_trace)
 
 	# Set sensor

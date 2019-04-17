@@ -4,7 +4,7 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import networkx as nx
 import sys
-sys.path.append('/home/praveen/workspace/carla/PythonAPI/agents/navigation/')
+sys.path.append('/home/praveen/workspace/carla/PythonAPI/carla/agents/navigation/')
 
 from local_planner import RoadOption
 from global_route_planner import GlobalRoutePlanner

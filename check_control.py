@@ -32,9 +32,8 @@ dao = GlobalRoutePlannerDAO(world_map)
 grp = GlobalRoutePlanner(dao)
 grp.setup()
 
-route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/Town08.xml'
-route_index = '0'
-speed = 20
+route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/routes_training.xml'
+route_index = '1'
 
 def parse_routes_file(route_filename):
     """
@@ -105,9 +104,6 @@ try:
 			print("Found hero vehicle")
 			vehicle = actor
 
-	agent = BasicAgent(vehicle, target_speed=speed)
-	agent._local_planner.set_global_plan(dense_route_trace)
-
 	# Set sensor
 	bp_library = world.get_blueprint_library()
 	bp = bp_library.find('sensor.camera.rgb')
@@ -144,8 +140,7 @@ try:
 
 	waypoint_index = 0
 	while True:
-		control = agent.run_step()
-		vehicle.apply_control(control)
+		control = vehicle.get_control()
 		for event in pygame.event.get():
 		    if event.type == pygame.QUIT:
 			sys.exit()
@@ -157,13 +152,13 @@ try:
 		xv, yv = vehicle.get_location().x, vehicle.get_location().y
 		xv, yv = np.round([xv, yv], 2)
 		# HUD
-		current_location_surface = myfont.render("Now: X "+str(xv)+" Y "+str(yv), True, (0, 0, 0))
+		current_location_surface = myfont.render("Throttle: "+str(control.throttle), True, (0, 0, 0))
 		next_location = route[waypoint_index]
 		next_location = carla.Location(
 			float(next_location.attrib['x']),
 			float(next_location.attrib['y']),
 			float(next_location.attrib['z']))
-		next_location_surface = myfont.render("Next: X "+str(round(next_location.x, 2))+" Y "+str(round(next_location.y, 2)), True, (0, 0, 0))
+		next_location_surface = myfont.render("Steer: "+str(control.steer), True, (0, 0, 0))
 		display.blit(current_location_surface,(1920*0.5*0.05, 1080*0.5*0.8))
 		display.blit(next_location_surface,(1920*0.5*0.05, 1080*0.5*0.9))
 		if vehicle.get_location().distance(next_location) < 10 and waypoint_index+1 < len(route):
