@@ -18,8 +18,10 @@ for segment in topology:
 	if math.sqrt((x2-x1)**2+(y2-y1)**2) > 0.01:
 		if segment[0].is_intersection:
 			plt.plot([x1, x2], [y1, y2], color='black')
+			plt.plot([x1, x2], [y1, y2], 'o')
 		else:
 			plt.plot([x1, x2], [y1, y2])
+			plt.plot([x1, x2], [y1, y2], 'o')
 		plt.arrow(x1, y1, (x2+x1)/2 - x1, (y2+y1)/2 - y1,
 		shape='full', lw=0, length_includes_head=True, head_width=2)
 	else:

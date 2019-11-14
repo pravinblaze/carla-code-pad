@@ -9,10 +9,9 @@ import carla
 from carla import ColorConverter as cc
 import pygame
 
-sys.path.append(os.path.abspath('/home/praveen/workspace/carla/PythonAPI/agents/navigation/'))
-from basic_agent import BasicAgent
-from global_route_planner import GlobalRoutePlanner
-from global_route_planner_dao import GlobalRoutePlannerDAO
+from agents.navigation.basic_agent import BasicAgent
+from agents.navigation.global_route_planner import GlobalRoutePlanner
+from agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
 
 client = carla.Client('localhost', 2000)
 world = client.get_world()
@@ -20,6 +19,7 @@ world_map = world.get_map()
 
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
+display_scale = 0.9 # x1080p
 
 vehicle = None
 camera_sensor = None
@@ -54,7 +54,7 @@ try:
 		# spawn_point = carla.Transform(carla.Location(x = 176.1, y = -375, z = 1), carla.Rotation(yaw = 0)) # 3
 		# spawn_point = carla.Transform(carla.Location(x = 227.6, y = -374.7, z = 1), carla.Rotation(yaw = 0)) # 4
 		# <Town05>
-		# spawn_point = carla.Transform(carla.Location(x = -54.75, y = -53, z = 1), carla.Rotation(yaw = 90)) # 1
+		spawn_point = carla.Transform(carla.Location(x = -54.75, y = -53, z = 1), carla.Rotation(yaw = 90)) # 1
 		# spawn_point = carla.Transform(carla.Location(x = -124.4, y = -111.9, z = 1), carla.Rotation(yaw = 90)) # 2
 		# spawn_point = carla.Transform(carla.Location(x = -124.4, y = -111.9, z = 1), carla.Rotation(yaw = 270)) # 3
 		# spawn_point = carla.Transform(carla.Location(x = 196.86, y = -1.7, z = 1), carla.Rotation(yaw = 90)) # 4
@@ -79,7 +79,7 @@ try:
 	# agent.set_destination((228.1, -307.7, 0)) # 3
 	# agent.set_destination((228.1, -307.7, 0)) # 4
 	# <Town05>
-	# agent.set_destination((-47.75, -50, 0)) # 1
+	agent.set_destination((-47.75, -50, 0)) # 1
 	# agent.set_destination((144.8, -2.8, 0)) # 2
 	# agent.set_destination((144.84, -1.07, 0)) # 3
 	# agent.set_destination((-129.33, 2.86, 0)) # 4
@@ -90,15 +90,17 @@ try:
 	# Set sensor
 	bp_library = world.get_blueprint_library()
 	bp = bp_library.find('sensor.camera.rgb')
-	bp.set_attribute('image_size_x', str(1920/2))
-	bp.set_attribute('image_size_y', str(1080/2))
+	bp.set_attribute('image_size_x', str(int(1920 * display_scale)))
+	bp.set_attribute('image_size_y', str(int(1080 * display_scale)))
 
 	camera_transform = carla.Transform(
-	carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15))
+		carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15)
+	)
 	camera_sensor = world.spawn_actor(
-	bp,
-	camera_transform,
-	attach_to=vehicle)
+		bp,
+		camera_transform,
+		attach_to=vehicle
+	)
 
 	# Camera callback funtion
 
@@ -115,8 +117,9 @@ try:
 
 	# Project camera image on pygame
 	display = pygame.display.set_mode(
-	(1920/2, 1080/2),
-	pygame.HWSURFACE | pygame.DOUBLEBUF)
+		(int(1920 * display_scale), int(1080 * display_scale)),
+		pygame.HWSURFACE | pygame.DOUBLEBUF
+	)
 
 	# Game loop
 	clock = pygame.time.Clock()
@@ -132,10 +135,10 @@ try:
 		    # print 'waiting for surface'
 		    pass
 		display.blit(camera_holder.surface, (0, 0))
-		xv, yv = vehicle.get_location().x, vehicle.get_location().y
-		xv, yv = np.round([xv, yv], 2)
-		textsurface = myfont.render("X: "+str(xv)+" Y:"+str(yv), True, (0, 0, 0))
-		display.blit(textsurface,(1920*0.5*0.1, 1080*0.5*0.9))
+		# xv, yv = vehicle.get_location().x, vehicle.get_location().y
+		# xv, yv = np.round([xv, yv], 2)
+		# textsurface = myfont.render("X: "+str(xv)+" Y:"+str(yv), True, (0, 0, 0))
+		# display.blit(textsurface,(int(1920*display_scale*0.1), int(1080*display_scale*0.9)))
 		pygame.display.flip()
 
 finally:

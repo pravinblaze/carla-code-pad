@@ -20,6 +20,7 @@ world_map = world.get_map()
 
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
+display_scale = 0.9 # x1080p
 
 vehicle = None
 camera_sensor = None
@@ -33,9 +34,9 @@ grp = GlobalRoutePlanner(dao)
 grp.setup()
 
 # -------------------- Enter configurations ------------------- #
-route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/Town08.xml'
-route_index = '10'
-basic_agnet_speed = 50
+route_filename = '/home/praveen/workspace/scenario_runner/srunner/challenge/routes_training.xml'
+route_index = '34'
+basic_agnet_speed = 40
 # ------------------------------------------------------------ #
 
 def parse_routes_file(route_filename):
@@ -116,8 +117,8 @@ try:
 	# Set sensor
 	bp_library = world.get_blueprint_library()
 	bp = bp_library.find('sensor.camera.rgb')
-	bp.set_attribute('image_size_x', str(1920/2))
-	bp.set_attribute('image_size_y', str(1080/2))
+	bp.set_attribute('image_size_x', str(int(1920 * display_scale)))
+	bp.set_attribute('image_size_y', str(int(1080 * display_scale)))
 
 	camera_transform = carla.Transform(
 	carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15))
@@ -141,7 +142,7 @@ try:
 
 	# Project camera image on pygame
 	display = pygame.display.set_mode(
-	(1920/2, 1080/2),
+	(int(1920 * display_scale), int(1080 * display_scale)),
 	pygame.HWSURFACE | pygame.DOUBLEBUF)
 
 	# Game loop
@@ -168,9 +169,9 @@ try:
 			float(next_location.attrib['x']),
 			float(next_location.attrib['y']),
 			float(next_location.attrib['z']))
-		next_location_surface = myfont.render("Next: X "+str(round(next_location.x, 2))+" Y "+str(round(next_location.y, 2)), True, (0, 0, 0))
-		display.blit(current_location_surface,(1920*0.5*0.05, 1080*0.5*0.8))
-		display.blit(next_location_surface,(1920*0.5*0.05, 1080*0.5*0.9))
+		# next_location_surface = myfont.render("Next: X "+str(round(next_location.x, 2))+" Y "+str(round(next_location.y, 2)), True, (0, 0, 0))
+		# display.blit(current_location_surface,(int(1920 * display_scale *0.05), int(1080 * display_scale * 0.8)))
+		# display.blit(next_location_surface,(int(1920 * display_scale *0.05), int(1080 * display_scale *0.9)))
 		if vehicle.get_location().distance(next_location) < 10 and waypoint_index+1 < len(route):
 			waypoint_index += 1
 		pygame.display.flip()

@@ -7,10 +7,8 @@ import xml.etree.ElementTree as ET
 import carla
 from agents.navigation.local_planner import RoadOption
 
-
 from agents.navigation.global_route_planner import GlobalRoutePlanner
 from agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
-
 
 
 def parse_routes_file(route_filename):
@@ -41,6 +39,7 @@ def parse_routes_file(route_filename):
 
     return list_route_descriptions
 
+
 def clean_route(route):
 
     curves_start_end = []
@@ -68,6 +67,7 @@ def clean_route(route):
             index += 1
 
     return curves_start_end
+
 
 # Draw waypoints with curves
 def draw_waypoints( world, waypoints, clean_route, vertical_shift, persistency=-1):
@@ -106,13 +106,13 @@ def draw_waypoints( world, waypoints, clean_route, vertical_shift, persistency=-
     world.debug.draw_point(waypoints[-1][0].location + carla.Location(z=vertical_shift), size=0.2,
                                 color=carla.Color(255, 0, 0), life_time=persistency)
 
+
 def take_route_picture(world, waypoints):
     wp_location = waypoints[len(waypoints)//2][0].location
     spectator = world.get_spectator()
 
     spectator.set_transform(carla.Transform(wp_location + carla.Location(z=250),
                                             carla.Rotation(pitch=-90)))
-
 
 
 def interpolate_trajectory(world, waypoints_trajectory, hop_resolution=2.0):
@@ -143,7 +143,6 @@ def interpolate_trajectory(world, waypoints_trajectory, hop_resolution=2.0):
     return route
 
 
-
 if __name__ == '__main__':
 
     DESCRIPTION = ("")
@@ -157,16 +156,13 @@ if __name__ == '__main__':
 
     client.set_timeout(25)
 
-    # route = parse_routes_file('/home/praveen/workspace/carla-challenge-contents/src/Town08.xml')
-    # route = parse_routes_file('/home/praveen/workspace/scenario_runner/srunner/challenge/routes_training.xml')
-    route = parse_routes_file('/home/praveen/workspace/carla-code-pad/corrected_routes.xml')
+    route = parse_routes_file('/home/praveen/workspace/scenario_runner/srunner/challenge/routes_training.xml')
     world = client.load_world(route[int(ARGUMENTS.id)]['town_name'])
     world.wait_for_tick()
 
     trajectory = interpolate_trajectory(world, route[int(ARGUMENTS.id)]['trajectory'])
     painted_points = clean_route(trajectory)
     print (painted_points)
-
 
     draw_waypoints(world, trajectory, painted_points, vertical_shift=1.0, persistency=50000.0)
 
